@@ -1,4 +1,5 @@
 # COVID19-Project collabrate with Forodwaith(github name)
+- course project for CSC343.
 
 Invastigated three questions:
 1.Does the epidemic affect men and women equally, and does the gender-balance vary by age? What about the same question for the recovery rate?
