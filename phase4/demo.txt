@@ -1,0 +1,249 @@
+dbsrv1:~/csc343db$ \psql csc343h-sunwenxu
+psql (10.15 (Ubuntu 10.15-0ubuntu0.18.04.1), server 10.14 (Ubuntu 10.14-0ubuntu0.18.04.1))
+Type "help" for help.
+
+csc343h-sunwenxu=> \i schema.ddl
+psql:schema.ddl:4: NOTICE:  drop cascades to 16 other objects
+DETAIL:  drop cascades to table covidschema.patient
+drop cascades to table covidschema.property
+drop cascades to table covidschema.phu
+drop cascades to table covidschema.record
+drop cascades to table covidschema.outcome
+drop cascades to table covidschema.exposure
+drop cascades to function covidschema.recordphu()
+drop cascades to view covidschema.ageandexposure
+drop cascades to view covidschema.ageandexposure1
+drop cascades to view covidschema.ageandexposure2
+drop cascades to view covidschema.genderandexposure1
+drop cascades to view covidschema.genderandexposure2
+drop cascades to view covidschema.samearea
+drop cascades to view covidschema.areaprice
+drop cascades to view covidschema.samecity
+drop cascades to view covidschema.citycases
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+csc343h-sunwenxu=> \copy property from property.csv with csv;
+COPY 23138
+csc343h-sunwenxu=> \copy patient from patient.csv with csv;
+COPY 53270
+csc343h-sunwenxu=> \copy phu from phu.csv with csv;
+COPY 32
+csc343h-sunwenxu=> \copy record from record.csv with csv;
+COPY 52629
+csc343h-sunwenxu=> \copy outcome from outcome.csv with csv;
+COPY 47311
+csc343h-sunwenxu=> \copy exposure from exposure.csv with csv;
+COPY 36361
+csc343h-sunwenxu=> \i queries.sql
+   gender    | cases 
+-------------+-------
+ OTHER       |    10
+ FEMALE      | 27421
+ TRANSGENDER |     4
+ MALE        | 25194
+(4 rows)
+
+ age |   gender    | count 
+-----+-------------+-------
+  30 | FEMALE      |  3791
+  30 | OTHER       |     1
+  80 | FEMALE      |  2341
+  60 | OTHER       |     1
+  80 | MALE        |  1407
+  40 | MALE        |  3368
+  90 | MALE        |   646
+  40 | TRANSGENDER |     1
+  50 | MALE        |  3551
+  40 | FEMALE      |  3814
+  60 | MALE        |  2701
+  20 | FEMALE      |  7150
+  30 | TRANSGENDER |     3
+  70 | MALE        |  1647
+  50 | OTHER       |     2
+  20 | OTHER       |     3
+  30 | MALE        |  4152
+  50 | FEMALE      |  4255
+  70 | OTHER       |     1
+  40 | OTHER       |     2
+  60 | FEMALE      |  2568
+  90 | FEMALE      |  1910
+  70 | FEMALE      |  1592
+  20 | MALE        |  7722
+(24 rows)
+
+   gender    | outcome  | cases 
+-------------+----------+-------
+ FEMALE      | death    |  1572
+ FEMALE      | recovery | 23315
+ FEMALE      |          |  2534
+ MALE        | death    |  1357
+ MALE        | recovery | 21054
+ MALE        |          |  2783
+ OTHER       | recovery |     9
+ OTHER       |          |     1
+ TRANSGENDER | recovery |     4
+(9 rows)
+
+psql:queries.sql:17: NOTICE:  view "ageandexposure1" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:queries.sql:24: NOTICE:  view "ageandexposure2" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+  method   | age | cases |         ratio          
+-----------+-----+-------+------------------------
+ proximity |  90 |    66 | 0.02701596397871469505
+ proximity |  80 |   261 | 0.07918689320388349515
+ proximity |  70 |   674 | 0.28705281090289608177
+ proximity |  60 |  1606 | 0.45547362450368689733
+ proximity |  50 |  2562 | 0.49526387009472259811
+ proximity |  40 |  2294 | 0.48243953732912723449
+ proximity |  30 |  2652 | 0.52681764004767580453
+ proximity |  20 |  6663 | 0.68087063151440833844
+(8 rows)
+
+ method | age | cases |         ratio          
+--------+-----+-------+------------------------
+ travel |  90 |     6 | 0.00245599672533769955
+ travel |  80 |    66 | 0.02002427184466019417
+ travel |  70 |   252 | 0.10732538330494037479
+ travel |  60 |   386 | 0.10947249007373794668
+ travel |  50 |   401 | 0.07751788130678523101
+ travel |  40 |   340 | 0.07150368033648790747
+ travel |  30 |   292 | 0.05800556217719507350
+ travel |  20 |   450 | 0.04598405885959534028
+(8 rows)
+
+  method  | age | cases |         ratio          
+----------+-----+-------+------------------------
+ outbreak |  90 |  2371 | 0.97052803929594760540
+ outbreak |  80 |  2969 | 0.90078883495145631068
+ outbreak |  70 |  1422 | 0.60562180579216354344
+ outbreak |  60 |  1534 | 0.43505388542257515598
+ outbreak |  50 |  2210 | 0.42721824859849217089
+ outbreak |  40 |  2121 | 0.44605678233438485804
+ outbreak |  30 |  2090 | 0.41517679777512912197
+ outbreak |  20 |  2673 | 0.27314530962599632128
+(8 rows)
+
+psql:queries.sql:51: NOTICE:  view "genderandexposure1" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:queries.sql:58: NOTICE:  view "genderandexposure2" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+  method   |   gender    | cases |         ratio          
+-----------+-------------+-------+------------------------
+ proximity | TRANSGENDER |     2 | 1.00000000000000000000
+ proximity | OTHER       |     3 | 0.37500000000000000000
+ proximity | MALE        |  8414 | 0.51034148116698004488
+ proximity | FEMALE      |  8359 | 0.42081151832460732984
+(4 rows)
+
+ method | gender | cases |         ratio          
+--------+--------+-------+------------------------
+ travel | MALE   |  1169 | 0.07090434888093649542
+ travel | FEMALE |  1024 | 0.05155054369714055578
+(2 rows)
+
+  method  | gender | cases |         ratio          
+----------+--------+-------+------------------------
+ outbreak | OTHER  |     5 | 0.62500000000000000000
+ outbreak | MALE   |  6904 | 0.41875416995208345970
+ outbreak | FEMALE | 10481 | 0.52763793797825211438
+(3 rows)
+
+psql:queries.sql:83: NOTICE:  view "samearea" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:queries.sql:90: NOTICE:  view "areaprice" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:queries.sql:97: NOTICE:  view "samecity" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:queries.sql:102: NOTICE:  view "citycases" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+       city       |       avgprice       | cases 
+------------------+----------------------+-------
+ Oakville         | 1435423.216783216783 |  1197
+ Toronto          |  780175.794270833333 | 18703
+ Whitby           |  765072.648648648649 |  2216
+ Barrie           |  753290.812030075188 |   935
+ Newmarket        |  741489.638888888889 |  4326
+ London           |  691506.829268292683 |   885
+ Hamilton         |  659767.681818181818 |  1181
+ Mississauga      |  616818.683834048641 |  9377
+ Thorold          |  587389.761904761905 |  1098
+ Guelph           |  554620.518518518519 |   667
+ Kenora           |  547966.666666666667 |    65
+ Waterloo         |  535547.763736263736 |  1759
+ Simcoe           |  511050.000000000000 |   479
+ Port Hope        |  508865.625000000000 |   242
+ Belleville       |  475283.297142857143 |    59
+ Brantford        |  474068.313253012048 |   207
+ Windsor          |  445491.722891566265 |  2648
+ Ottawa           |  420247.254237288136 |  4596
+ Kingston         |  417418.801762114537 |   142
+ Sudbury          |  395407.371134020619 |   108
+ Peterborough     |  393713.550000000000 |   127
+ Owen Sound       |  357487.666666666667 |   135
+ Stratford        |  317718.750000000000 |   128
+ Point Edward     |  306266.666666666667 |   346
+ New Liskeard     |  280052.631578947368 |    19
+ Thunder Bay      |  262006.111111111111 |   106
+ Timmins          |  258684.000000000000 |    84
+ North Bay        |  247723.750000000000 |    38
+ Pembroke         |  237247.623529411765 |    52
+ Brockville       |  231050.000000000000 |   392
+ Sault Ste. Marie |  204000.000000000000 |    34
+ Cornwall         |  200476.724137931034 |   278
+(32 rows)
+
+       city       | numproperty | cases 
+------------------+-------------+-------
+ Toronto          |        1152 | 18703
+ Mississauga      |         699 |  9377
+ Waterloo         |         364 |  1759
+ Oakville         |         286 |  1197
+ Kingston         |         227 |   142
+ Peterborough     |         200 |   127
+ Ottawa           |         177 |  4596
+ Belleville       |         175 |    59
+ Brantford        |         166 |   207
+ Windsor          |         166 |  2648
+ Owen Sound       |         156 |   135
+ Barrie           |         133 |   935
+ Cornwall         |         116 |   278
+ Guelph           |         108 |   667
+ Sudbury          |          97 |   108
+ Pembroke         |          85 |    52
+ North Bay        |          84 |    38
+ Whitby           |          74 |  2216
+ Newmarket        |          72 |  4326
+ Hamilton         |          66 |  1181
+ Thorold          |          42 |  1098
+ London           |          41 |   885
+ Timmins          |          25 |    84
+ New Liskeard     |          19 |    19
+ Thunder Bay      |          18 |   106
+ Port Hope        |          16 |   242
+ Simcoe           |          10 |   479
+ Stratford        |           8 |   128
+ Brockville       |           4 |   392
+ Kenora           |           3 |    65
+ Point Edward     |           3 |   346
+ Sault Ste. Marie |           1 |    34
+(32 rows)
+
+csc343h-sunwenxu=> \q

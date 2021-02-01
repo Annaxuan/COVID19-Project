@@ -1,0 +1,358 @@
+dbsrv1:~/csc343db$ \psql csc343h-sunwenxu
+psql (10.15 (Ubuntu 10.15-0ubuntu0.18.04.1), server 10.14 (Ubuntu 10.14-0ubuntu0.18.04.1))
+Type "help" for help.
+
+csc343h-sunwenxu=> \i schema.ddl
+psql:schema.ddl:4: NOTICE:  drop cascades to 15 other objects
+DETAIL:  drop cascades to table covidschema.patient
+drop cascades to table covidschema.property
+drop cascades to table covidschema.phu
+drop cascades to table covidschema.record
+drop cascades to table covidschema.outcome
+drop cascades to table covidschema.exposure
+drop cascades to function covidschema.recordphu()
+drop cascades to view covidschema.ageandexposure1
+drop cascades to view covidschema.ageandexposure2
+drop cascades to view covidschema.genderandexposure1
+drop cascades to view covidschema.genderandexposure2
+drop cascades to view covidschema.samearea
+drop cascades to view covidschema.areaprice
+drop cascades to view covidschema.samecity
+drop cascades to view covidschema.citycases
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+csc343h-sunwenxu=> \copy property from property.csv with csv;
+COPY 23138
+csc343h-sunwenxu=> \copy patient from patient.csv with csv;
+COPY 53270
+csc343h-sunwenxu=> \copy phu from phu.csv with csv;
+COPY 32
+csc343h-sunwenxu=> \copy record from record.csv with csv;
+COPY 52629
+csc343h-sunwenxu=> \copy outcome from outcome.csv with csv;
+COPY 47311
+csc343h-sunwenxu=> \copy exposure from exposure.csv with csv;
+COPY 36361
+csc343h-sunwenxu=> \i queries.sql
+
+-- Question 1
+-- 1A: Number of cases for Male and Female
+ gender | cases 
+--------+-------
+ FEMALE | 27421
+ MALE   | 25194
+(2 rows)
+
+-- 1B: Number of cases for Male and Female by age group
+ age | gender | cases 
+-----+--------+-------
+  90 | FEMALE |  1910
+  90 | MALE   |   646
+  80 | FEMALE |  2341
+  80 | MALE   |  1407
+  70 | FEMALE |  1592
+  70 | MALE   |  1647
+  60 | FEMALE |  2568
+  60 | MALE   |  2701
+  50 | FEMALE |  4255
+  50 | MALE   |  3551
+  40 | FEMALE |  3814
+  40 | MALE   |  3368
+  30 | FEMALE |  3791
+  30 | MALE   |  4152
+  20 | FEMALE |  7150
+  20 | MALE   |  7722
+(16 rows)
+
+-- 1C: Ratio of no. male cases to no. female cases, by age
+ age |         ratio          
+-----+------------------------
+  90 | 0.33821989528795811518
+  80 | 0.60102520290474156343
+  70 |     1.0345477386934673
+  60 |     1.0517912772585670
+  50 | 0.83454759106933019976
+  40 | 0.88306240167802831673
+  30 |     1.0952255341598523
+  20 |     1.0800000000000000
+(8 rows)
+
+
+-- 1D: 1B but restricted to 'proximity'-caused cases
+ age | gender | cases 
+-----+--------+-------
+  90 | FEMALE |    37
+  90 | MALE   |    29
+  80 | FEMALE |   151
+  80 | MALE   |   110
+  70 | FEMALE |   330
+  70 | MALE   |   343
+  60 | FEMALE |   789
+  60 | MALE   |   817
+  50 | FEMALE |  1331
+  50 | MALE   |  1231
+  40 | FEMALE |  1227
+  40 | MALE   |  1066
+  30 | FEMALE |  1351
+  30 | MALE   |  1299
+  20 | FEMALE |  3143
+  20 | MALE   |  3519
+(16 rows)
+
+-- 1E: 1C but restricted to 'proximity'-caused cases
+ age |         ratio          
+-----+------------------------
+  90 | 0.78378378378378378378
+  80 | 0.72847682119205298013
+  70 |     1.0393939393939394
+  60 |     1.0354879594423321
+  50 | 0.92486851990984222389
+  40 | 0.86878565607171964140
+  30 | 0.96150999259807549963
+  20 |     1.1196309258670060
+(8 rows)
+
+-- 1F: outcome numbers by gender
+ gender |  outcome   | cases 
+--------+------------+-------
+ FEMALE | death      |  1572
+ FEMALE | recovery   | 23315
+ FEMALE | unresolved |  2534
+ MALE   | death      |  1357
+ MALE   | recovery   | 21054
+ MALE   | unresolved |  2783
+(6 rows)
+
+-- 1G: the recovery rates for both men and women, by age
+ age | gender |          rate          
+-----+--------+------------------------
+  20 | FEMALE | 0.99966876449155349453
+  20 | MALE   | 0.99953445065176908752
+  30 | FEMALE | 1.00000000000000000000
+  30 | MALE   | 0.99807215643073533462
+  40 | FEMALE | 0.99739206027238481600
+  40 | MALE   | 0.99407114624505928854
+  50 | FEMALE | 0.99090219863532979530
+  50 | MALE   | 0.98151571164510166359
+  60 | FEMALE | 0.95991649269311064718
+  60 | MALE   | 0.93206197854588796186
+  70 | FEMALE | 0.86570111915734035550
+  70 | MALE   | 0.79833546734955185659
+  80 | FEMALE | 0.74901445466491458607
+  80 | MALE   | 0.63932002956393200296
+  90 | FEMALE | 0.65300691857370941990
+  90 | MALE   | 0.52572347266881028939
+(16 rows)
+
+
+-- Question 2
+
+psql:queries.sql:82: NOTICE:  view "ageandexposure1" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:queries.sql:89: NOTICE:  view "ageandexposure2" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+
+-- 2A: Patients inflected with covid-19 by proximity, order by age group.
+-- ratio represents the percentage of each age group was inflected by proximity.
+-- For example, the first line shows approximately 2.7% of patients with age 
+-- group 90 was inflected by proximity.
+
+  method   | age | cases |         ratio          
+-----------+-----+-------+------------------------
+ proximity |  90 |    66 | 0.02701596397871469505
+ proximity |  80 |   261 | 0.07918689320388349515
+ proximity |  70 |   674 | 0.28705281090289608177
+ proximity |  60 |  1606 | 0.45547362450368689733
+ proximity |  50 |  2562 | 0.49526387009472259811
+ proximity |  40 |  2294 | 0.48243953732912723449
+ proximity |  30 |  2652 | 0.52681764004767580453
+ proximity |  20 |  6663 | 0.68087063151440833844
+(8 rows)
+
+
+-- 2B: Patients inflected with covid-19 by travel, order by age group.
+-- ratio represents the percentage of each age group was inflected by travel.
+-- For example, the first line shows approximately 0.2% of patients with age 
+-- group 90 was inflected by travel.
+
+ method | age | cases |         ratio          
+--------+-----+-------+------------------------
+ travel |  90 |     6 | 0.00245599672533769955
+ travel |  80 |    66 | 0.02002427184466019417
+ travel |  70 |   252 | 0.10732538330494037479
+ travel |  60 |   386 | 0.10947249007373794668
+ travel |  50 |   401 | 0.07751788130678523101
+ travel |  40 |   340 | 0.07150368033648790747
+ travel |  30 |   292 | 0.05800556217719507350
+ travel |  20 |   450 | 0.04598405885959534028
+(8 rows)
+
+-- 2C: Patients inflected with covid-19 by outbreak, order by age group.
+-- ratio represents the percentage of each age group was inflected by outbreak.
+-- For example, the first line shows approximately 97% of patients with age 
+-- group 90 was inflected by outbreak.
+
+  method  | age | cases |         ratio          
+----------+-----+-------+------------------------
+ outbreak |  90 |  2371 | 0.97052803929594760540
+ outbreak |  80 |  2969 | 0.90078883495145631068
+ outbreak |  70 |  1422 | 0.60562180579216354344
+ outbreak |  60 |  1534 | 0.43505388542257515598
+ outbreak |  50 |  2210 | 0.42721824859849217089
+ outbreak |  40 |  2121 | 0.44605678233438485804
+ outbreak |  30 |  2090 | 0.41517679777512912197
+ outbreak |  20 |  2673 | 0.27314530962599632128
+(8 rows)
+
+psql:queries.sql:131: NOTICE:  view "genderandexposure1" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:queries.sql:138: NOTICE:  view "genderandexposure2" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+
+-- 2D: Patients inflected with covid-19 by proximity, order by gender group, ratio
+-- represents the percentage of each gender group was inflected by proximity.
+-- For example, the first line shows 100% of patients with with gender of 
+-- transgender was inflected by proximity.
+
+  method   |   gender    | cases |         ratio          
+-----------+-------------+-------+------------------------
+ proximity | TRANSGENDER |     2 | 1.00000000000000000000
+ proximity | OTHER       |     3 | 0.37500000000000000000
+ proximity | MALE        |  8414 | 0.51034148116698004488
+ proximity | FEMALE      |  8359 | 0.42081151832460732984
+(4 rows)
+
+-- 2E: Patients inflected with covid-19 by travel, order by gender group, ratio
+-- represents the percentage of each gender group was inflected by travel. 
+-- If the gender group is not listed, then no patient in that gender group is 
+-- inflected by travel. 
+-- For example, the first line shows 7% of patients with with gender of 
+-- male was inflected by travel.
+
+ method | gender | cases |         ratio          
+--------+--------+-------+------------------------
+ travel | MALE   |  1169 | 0.07090434888093649542
+ travel | FEMALE |  1024 | 0.05155054369714055578
+(2 rows)
+
+-- 2F: Patients inflected with covid-19 by outbreak, order by gender group, ratio
+-- represents the percentage of each gender group was inflected by outbreak. 
+-- If the gender group is not listed, then no patient in that gender group is 
+-- inflected by outbreak. 
+-- For example, no transgender patient is inflected by outbreak.
+
+  method  | gender | cases |         ratio          
+----------+--------+-------+------------------------
+ outbreak | OTHER  |     5 | 0.62500000000000000000
+ outbreak | MALE   |  6904 | 0.41875416995208345970
+ outbreak | FEMALE | 10481 | 0.52763793797825211438
+(3 rows)
+
+
+-- Question 3
+
+psql:queries.sql:178: NOTICE:  view "samearea" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:queries.sql:185: NOTICE:  view "areaprice" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:queries.sql:192: NOTICE:  view "samecity" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:queries.sql:197: NOTICE:  view "citycases" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+
+-- 3A: The average price of properties and number of positive cases recorded
+-- in specific city.
+
+       city       |       avgprice       | cases 
+------------------+----------------------+-------
+ Oakville         | 1435423.216783216783 |  1197
+ Toronto          |  780175.794270833333 | 18703
+ Whitby           |  765072.648648648649 |  2216
+ Barrie           |  753290.812030075188 |   935
+ Newmarket        |  741489.638888888889 |  4326
+ London           |  691506.829268292683 |   885
+ Hamilton         |  659767.681818181818 |  1181
+ Mississauga      |  616818.683834048641 |  9377
+ Thorold          |  587389.761904761905 |  1098
+ Guelph           |  554620.518518518519 |   667
+ Kenora           |  547966.666666666667 |    65
+ Waterloo         |  535547.763736263736 |  1759
+ Simcoe           |  511050.000000000000 |   479
+ Port Hope        |  508865.625000000000 |   242
+ Belleville       |  475283.297142857143 |    59
+ Brantford        |  474068.313253012048 |   207
+ Windsor          |  445491.722891566265 |  2648
+ Ottawa           |  420247.254237288136 |  4596
+ Kingston         |  417418.801762114537 |   142
+ Sudbury          |  395407.371134020619 |   108
+ Peterborough     |  393713.550000000000 |   127
+ Owen Sound       |  357487.666666666667 |   135
+ Stratford        |  317718.750000000000 |   128
+ Point Edward     |  306266.666666666667 |   346
+ New Liskeard     |  280052.631578947368 |    19
+ Thunder Bay      |  262006.111111111111 |   106
+ Timmins          |  258684.000000000000 |    84
+ North Bay        |  247723.750000000000 |    38
+ Pembroke         |  237247.623529411765 |    52
+ Brockville       |  231050.000000000000 |   392
+ Sault Ste. Marie |  204000.000000000000 |    34
+ Cornwall         |  200476.724137931034 |   278
+(32 rows)
+
+-- 3B: The number of properties and number of positive cases recorded
+-- in specific city.
+
+       city       | numproperty | cases 
+------------------+-------------+-------
+ Toronto          |        1152 | 18703
+ Mississauga      |         699 |  9377
+ Waterloo         |         364 |  1759
+ Oakville         |         286 |  1197
+ Kingston         |         227 |   142
+ Peterborough     |         200 |   127
+ Ottawa           |         177 |  4596
+ Belleville       |         175 |    59
+ Brantford        |         166 |   207
+ Windsor          |         166 |  2648
+ Owen Sound       |         156 |   135
+ Barrie           |         133 |   935
+ Cornwall         |         116 |   278
+ Guelph           |         108 |   667
+ Sudbury          |          97 |   108
+ Pembroke         |          85 |    52
+ North Bay        |          84 |    38
+ Whitby           |          74 |  2216
+ Newmarket        |          72 |  4326
+ Hamilton         |          66 |  1181
+ Thorold          |          42 |  1098
+ London           |          41 |   885
+ Timmins          |          25 |    84
+ New Liskeard     |          19 |    19
+ Thunder Bay      |          18 |   106
+ Port Hope        |          16 |   242
+ Simcoe           |          10 |   479
+ Stratford        |           8 |   128
+ Brockville       |           4 |   392
+ Kenora           |           3 |    65
+ Point Edward     |           3 |   346
+ Sault Ste. Marie |           1 |    34
+(32 rows)
+
+csc343h-sunwenxu=> \q

@@ -1,0 +1,17 @@
+\documentclass{article}
+
+\begin{document}
+The following decisions were made in organizing the data:
+\begin{enumerate}
+	\item We discarded the additional information in our data which we did not use in our schema. This includes, for instance,
+		the website of each public health unit, and the date on which patients' test results came back.
+	\item We deleted items with missing pieces of information, which would have resulted in null values, violating our schema(\emph{outcome} table, \emph{patient} table).
+	\item Similarly, we deleted rows with entries like 'UNKNOWN' and 'NO INFO/MISSING', to conform the data to our schema((\emph{exposure} table).
+	\item Some values in the \emph{property} file appeared more than once.
+		In such cases, the maximum price for each real estate property was chosen as the nominal price and the 
+		duplicates were eliminated.
+	\item Where the \emph{property} csv file made finer gradations in area names, such as 'Downtown Toronto', 'Midtown Toronto', and 'Toronto', we simplified these
+		to a coarser form, in this case 'Toronto', so as to conform to the convention used by the \emph{phu} csv file.
+	\item We deleted some data in \emph{phu} csv file, where its city is not shown in \emph{property} csv file, which violet the referential integrity constraint. 
+\end{enumerate}
+\end{document}
