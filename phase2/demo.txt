@@ -1,0 +1,61 @@
+anna@Annas-MacBook-Pro-2 Desktop % ssh sunwenxu@dbsrv1.teach.cs.toronto.edu;
+sunwenxu@dbsrv1.teach.cs.toronto.edu's password: 
+    Type "faq" to view FAQ, and "rules" to view usage policy.
+    Report system problems by sending email to <sysadmin@teach.cs.toronto.edu>.
+
+The Teaching Labs are: BA2200 BA2210 BA2220 BA2240 BA2270 BA3175 BA3185 BA3195 BA3200
+
+Teaching Labs are operating in reduced capacity. See https://www.teach.cs.toronto.edu/fall2020
+
+This is a shared Linux system. By using this system, you acknowledge that
+some information about your computer account (e.g. login name, process data,
+etc.) will be available to other users sharing this system, in ways 
+typical of shared Linux systems.  
+
+Last login: Thu Oct 29 12:27:18 2020 from bras-vprn-toroon020aw-lp130-23-174-95-99-92.dsl.bell.ca
+dbsrv1:~$ ls
+Android   Desktop    Downloads  newdir    Public    Templates            Videos
+csc343db  Documents  Music      Pictures  sunwenxu  Thunderbird_Folders
+dbsrv1:~$ cd csc343db
+dbsrv1:~/csc343db$ ls
+demo.txt  practice  sample_query.sql  schema.ddl  world.sql
+dbsrv1:~/csc343db$ psql csc343h-sunwenxu
+psql (10.14 (Ubuntu 10.14-0ubuntu0.18.04.1))
+Type "help" for help.
+
+csc343h-sunwenxu=> \i schema.ddl
+psql:schema.ddl:4: NOTICE:  drop cascades to 7 other objects
+DETAIL:  drop cascades to table covidschema.patient
+drop cascades to table covidschema.phu
+drop cascades to table covidschema.record
+drop cascades to table covidschema.outcome
+drop cascades to table covidschema.exposure
+drop cascades to table covidschema.property
+drop cascades to function covidschema.recordproperty()
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+csc343h-sunwenxu=> \d
+             List of relations
+   Schema    |   Name   | Type  |  Owner   
+-------------+----------+-------+----------
+ covidschema | exposure | table | sunwenxu
+ covidschema | outcome  | table | sunwenxu
+ covidschema | patient  | table | sunwenxu
+ covidschema | phu      | table | sunwenxu
+ covidschema | property | table | sunwenxu
+ covidschema | record   | table | sunwenxu
+(6 rows)
+
+csc343h-sunwenxu=> \q
+dbsrv1:~/csc343db$ exit
+logout
+Connection to dbsrv1.teach.cs.toronto.edu closed.
