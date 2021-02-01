@@ -1,0 +1,18 @@
+\copy property from property.csv with csv;
+\copy patient from patient.csv with csv;
+\copy phu from phu.csv with csv;
+\copy record from record.csv with csv;
+\copy outcome from outcome.csv with csv;
+\copy exposure from exposure.csv with csv;
+select count(*) from property;
+select count(*) from patient;
+select count(*) from phu;
+select count(*) from record;
+select count(*) from outcome;
+select count(*) from exposure;
+select * from property where price = 25000;
+select * from patient where pid <= 5;
+select * from phu where uid <= 5;
+select * from record where rid <= 5;
+select * from outcome where rid <= 5;
+select * from exposure where rid <= 5;

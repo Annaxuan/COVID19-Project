@@ -1,0 +1,131 @@
+dbsrv1:~/csc343db$ \psql csc343h-sunwenxu
+psql (10.14 (Ubuntu 10.14-0ubuntu0.18.04.1))
+Type "help" for help.
+
+csc343h-sunwenxu=> \i schema.ddl
+psql:schema.ddl:3: NOTICE:  drop cascades to 7 other objects
+DETAIL:  drop cascades to table covidschema.patient
+drop cascades to table covidschema.property
+drop cascades to table covidschema.phu
+drop cascades to table covidschema.record
+drop cascades to table covidschema.outcome
+drop cascades to table covidschema.exposure
+drop cascades to function covidschema.recordphu()
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+csc343h-sunwenxu=> \copy property from property.csv with csv;
+COPY 23138
+csc343h-sunwenxu=> \copy patient from patient.csv with csv;
+COPY 53270
+csc343h-sunwenxu=> \copy phu from phu.csv with csv;
+COPY 32
+csc343h-sunwenxu=> \copy record from record.csv with csv;
+COPY 52629
+csc343h-sunwenxu=> \copy outcome from outcome.csv with csv;
+COPY 47311
+csc343h-sunwenxu=> \copy exposure from exposure.csv with csv;
+COPY 36361
+csc343h-sunwenxu=> select count(*) from property;
+ count 
+-------
+ 23138
+(1 row)
+
+csc343h-sunwenxu=> select count(*) from patient;
+ count 
+-------
+ 53270
+(1 row)
+
+csc343h-sunwenxu=> select count(*) from phu;
+ count 
+-------
+    32
+(1 row)
+
+csc343h-sunwenxu=> select count(*) from record;
+ count 
+-------
+ 52629
+(1 row)
+
+csc343h-sunwenxu=> select count(*) from outcome;
+ count 
+-------
+ 47311
+(1 row)
+
+csc343h-sunwenxu=> select count(*) from exposure;
+ count 
+-------
+ 36361
+(1 row)
+
+csc343h-sunwenxu=> select * from property where price = 25000;
+                   address                   |         area         | price 
+---------------------------------------------+----------------------+-------
+ 36 PINEHURST ESTATES STREET Petawawa, ON    | Petawawa             | 25000
+ 0 Thibadeau Rd Bancroft, ON                 | Bancroft             | 25000
+ 2668 BINBROOK Road Binbrook, ON             | Hamilton             | 25000
+ #3 - 2323 BLOOR ST W Toronto, ON            | Bloor West Village   | 25000
+ 18 PROUT Street Bruce Mines, ON             | Bruce Mines          | 25000
+ #A30 - 10 Turntable Cres Toronto, ON        | Davenport            | 25000
+ 2300A Bloor St Toronto, ON                  | Bloor West Village   | 25000
+ 725 KENNEDY RD Toronto, ON                  | Scarborough Junction | 25000
+ #2&amp;3 - 201 River Oaks Blvd Oakville, ON | Oakville             | 25000
+(9 rows)
+
+csc343h-sunwenxu=> select * from patient where pid <= 5;
+ pid | age | gender 
+-----+-----+--------
+   1 |  20 | FEMALE
+   2 |  20 | MALE
+   3 |  60 | MALE
+   4 |  40 | MALE
+   5 |  40 | FEMALE
+(5 rows)
+
+csc343h-sunwenxu=> select * from phu where uid <= 5;
+ uid |              name               |       city       | postalcode 
+-----+---------------------------------+------------------+------------
+   1 | Algoma Public Health Unit       | Sault Ste. Marie | P6B 0A9
+   2 | Brant County Health Unit        | Brantford        | N3R 1G7
+   4 | Durham Region Health Department | Whitby           | L1N 0B2
+   5 | Eastern Ontario Health Unit     | Cornwall         | K6J 5T1
+(4 rows)
+
+csc343h-sunwenxu=> select * from record where rid <= 5;
+ rid | pid |    date    | uid 
+-----+-----+------------+-----
+   1 |   1 | 2020-09-18 |  21
+   2 |   2 | 2020-09-28 |  12
+   3 |   3 | 2020-09-14 |  21
+   4 |   4 | 2020-09-17 |  33
+   5 |   5 | 2020-10-01 |  21
+(5 rows)
+
+csc343h-sunwenxu=> select * from outcome where rid <= 5;
+ rid | outcome  
+-----+----------
+   1 | recovery
+   3 | recovery
+   4 | recovery
+(3 rows)
+
+csc343h-sunwenxu=> select * from exposure where rid <= 5;
+ rid |  method   
+-----+-----------
+   3 | proximity
+   4 | proximity
+(2 rows)
+
+csc343h-sunwenxu=> \q
